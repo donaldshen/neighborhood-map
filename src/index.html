@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1">
+  <title>Neighborhood Map</title>
+  <link rel="stylesheet" href="css/style.css" media="screen" title="no title">
+</head>
+<body>
+  <div class="container">
+    <aside class="list-view">
+      <ul id="list">
+        <li></li>
+      </ul>
+    </aside>
+    <main>
+      <header>
+        <a id="menu">☰</a>
+        <input type="text">
+      </header>
+      <div id="map">
+      </div>
+    </main>
+  </div>
+  <script>
+    /*
+     * Toggle the list-view when the menu ison is clicked.
+     */
+    var menu = document.getElementById('menu');
+    var main = document.getElementsByTagName('main')[0];
+    var listView = document.querySelector('.list-view');
+
+    menu.addEventListener('click', function(e) {
+      listView.classList.toggle('close');
+    });
+
+  </script>
+  <script src="js/map.js" charset="utf-8"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlbHcl_He2y0bb6GAcAbUfJ2xq-zITBs&callback=mapEngine">
+  </script>
+</body>
+</html>

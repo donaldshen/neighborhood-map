@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+}
+
+.list-view {
+    flex: 0 200px;
+}
+
+.list-view.close {
+    display: none;
+}
+
+main {
+    flex: 1 auto;
+    display: flex;
+    flex-flow: column;
+}
+
+header {
+    height: 50px;
+    width: 100%;
+}
+
+#map {
+    flex: 1 auto;
+}
