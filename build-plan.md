@@ -5,7 +5,7 @@ single page application，有map，上面有被标记的locations，点击后展
 > ### workflow
 > 1. watch webcast
 > 2. gulp/html/css/map
-> 3. responsive design
+> 3. responsive design(this is killing me! fuck flex! fuck safari!)
 > 4. knockout tutor
 > 5. autocomplete/model
 > 6. marker/animation
