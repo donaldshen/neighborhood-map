@@ -26,10 +26,30 @@ body {
     height: 100%;
     overflow: auto;
     transition: width 0.5s cubic-bezier(0, 0, 0.2, 1);
+    padding: 5px;
 }
 
 #list-view.close {
     width: 0;
+    padding: 0;
+}
+
+#list-view ul {
+    list-style: none;
+    padding: 0;
+}
+
+#list-view ul li{
+    display: block;
+    text-decoration: none;
+    line-height: 30px;
+    border-bottom: solid 1px #737373;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+#list-view ul li:hover {
+    color: #737373;
 }
 
 main {
@@ -63,4 +83,18 @@ header > input {
 
 #map {
     height: 90%;
+}
+
+.infowindow {
+    color: #303030;
+    font-family: Arial, sans-serif;
+}
+
+.infowindow a {
+    color: #0091ff;
+    text-decoration: none;
+}
+
+.infowindow p {
+    margin: 5px 0 0 0;
 }

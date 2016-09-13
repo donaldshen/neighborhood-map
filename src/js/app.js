@@ -1,22 +1,29 @@
 /**
-* @file info
+* @file Contains viewmodel and map facility.
 * @author Donald Shen <donald930224@hotmail.com>
 */
 
+/**
+* Global variables.
+*/
 var LOCATIONS = [
-    {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-    {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-    {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-    {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-    {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-    {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+    ['Statue of Liberty National Monument', 40.689249,-74.0445],
+    ['Time Square', 40.758895,-73.985131],
+    ['Headquarters of the United Nations', 40.748876,-73.968009],
+    ['Wall Street', 40.706001,-74.008801],
+    ['Chinatown, Manhattan', 40.715751,-73.997031],
+    ['Central Park', 40.782865,-73.965355],
 ];
-
+LOCATIONS = LOCATIONS.map(function (l) {
+    return {title: l[0], latLng: {lat: l[1], lng: l[2]}};
+});
 var MAP;
 var INFO_WINDOW;
 var MARKERS = [];
 
-
+/**
+* Create MAP, INFO_WINDOW and MARKERS.
+*/
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.7413549, lng: -73.9980244},
@@ -32,10 +39,9 @@ function initMap() {
     var defaultIcon = new MarkerIcon('0091ff')
     var highlightedIcon = new MarkerIcon('FFFF24')
 
-    // Create a marker per location, and put into MARKERS array.
     LOCATIONS.forEach(function (l) {
         var marker = new google.maps.Marker({
-            position: l.location,
+            position: l.latLng,
             title: l.title,
             icon: defaultIcon,
             animation: google.maps.Animation.DROP,
@@ -53,19 +59,43 @@ function initMap() {
     });
 }
 
-
+/**
+* Open INFO_WINDOW related to the marker.
+* @param {google.maps.Marker} marker
+*/
 function openInfoWindowOnMarker(marker) {
+    // One bounce
     marker.setAnimation(google.maps.Animation.BOUNCE)
     window.setTimeout(function () {
         marker.setAnimation(null)
     }, 740);
+    // Request for wiki content
+    var wikiRequestTimeout = setTimeout(function () {
+        INFO_WINDOW.setContent('failed to get wikipedia resources');
+    }, 5000);
+    var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&callback=wikiCallback&format=json'
+    $.ajax(wikiUrl, {
+        dataType: 'jsonp',
+        success: function (response) {
+            var title = response[0];
+            var intro = response[2][0];
+            var link = response[3][0];
+            var items = [];
+            var content = '<div class="infowindow"><a href="' + link +'">' + title + '</a>' +
+                          '<p>' + intro + '</p></div>';
+            INFO_WINDOW.setContent(content);
 
-    // Clear the infowindow content to give the streetview time to load.
-    INFO_WINDOW.setContent(marker.title);
+            clearTimeout(wikiRequestTimeout);
+        }
+    })
     INFO_WINDOW.open(map, marker);
 }
 
-
+/**
+* Display the markers related to locations on map.
+* @param {Object[]} locations
+* @param {string} locations[].title - Use to match marker.
+*/
 function displayMakers(locations) {
     var bounds = new google.maps.LatLngBounds();
     MARKERS.forEach(function (marker) {
@@ -82,7 +112,9 @@ function displayMakers(locations) {
     map.fitBounds(bounds);
 }
 
-
+/**
+* Create the viewmodel of knockout.
+*/
 function ViewModel() {
     var self = this;
     self.inputText = ko.observable('');
@@ -100,7 +132,9 @@ function ViewModel() {
     };
 }
 
-
+/**
+* Called back by google maps request.
+*/
 function init() {
     initMap();
     ko.applyBindings(new ViewModel());

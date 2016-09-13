@@ -22,18 +22,14 @@
       </div>
     </main>
   </div>
-  <script>
-    /*
-     * Toggle the list-view when the toggle ison is clicked.
-     */
-
-    document.getElementById('toggle').addEventListener('click', function(e) {
-      document.getElementById('list-view').classList.toggle('close');
-      document.getElementsByTagName('main')[0].classList.toggle('expand');
-    });
-
-  </script>
   <script src="js/jquery-3.1.0.min.js"></script>
+  <!-- Responsive design -->
+  <script>
+    $('#toggle').click(function () {
+      $('#list-view').toggleClass('close');
+      $('main').toggleClass('expand');
+    });
+  </script>
   <script src='js/knockout-3.4.0.js'></script>
   <script src="js/app.js" charset="utf-8"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlbHcl_He2y0bb6GAcAbUfJ2xq-zITBs&callback=init">
