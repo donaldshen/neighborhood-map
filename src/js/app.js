@@ -4,11 +4,12 @@
 */
 
 var LOCATIONS = [
-    {title: '1教育厅宿舍', location: {lat: 23.135018, lng: 113.298225}},
-    {title: '1盈彩美居', location: {lat: 23.113651, lng: 113.418201}},
-    {title: '2太古汇', location: {lat: 23.133955, lng: 113.331465}},
-    {title: '2正佳广场', location: {lat: 23.132171, lng: 113.3269843}},
-    {title: '3优衣库', location: {lat: 23.134897, lng: 113.321216}},
+    {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
+    {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
+    {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
+    {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
+    {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
+    {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
 ];
 
 var MAP;
@@ -17,9 +18,8 @@ var MARKERS = [];
 
 
 function initMap() {
-    var guangzhou = {lat: 23.12911, lng: 113.264385};
     map = new google.maps.Map(document.getElementById('map'), {
-        center: guangzhou,
+        center: {lat: 40.7413549, lng: -73.9980244},
         zoom: 13,
     });
 
@@ -48,16 +48,21 @@ function initMap() {
             this.setIcon(defaultIcon)
         })
         marker.addListener('click', function() {
-            // Clear the infowindow content to give the streetview time to load.
-            INFO_WINDOW.setContent('hi');
-
-            INFO_WINDOW.open(map, marker)
-            marker.setAnimation(google.maps.Animation.BOUNCE)
-            window.setTimeout(function () {
-                marker.setAnimation(null)
-            }, 730);
+            openInfoWindowOnMarker(marker)
         })
     });
+}
+
+
+function openInfoWindowOnMarker(marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE)
+    window.setTimeout(function () {
+        marker.setAnimation(null)
+    }, 740);
+
+    // Clear the infowindow content to give the streetview time to load.
+    INFO_WINDOW.setContent(marker.title);
+    INFO_WINDOW.open(map, marker);
 }
 
 
@@ -80,14 +85,19 @@ function displayMakers(locations) {
 
 function ViewModel() {
     var self = this;
-    self.inputText = ko.observable();
+    self.inputText = ko.observable('');
     self.locations = ko.computed(function () {
         var locations = ko.utils.arrayFilter(LOCATIONS, function (l) {
-            return l.title.search(self.inputText()) !== -1;
+            return l.title.toLowerCase().search(self.inputText().toLowerCase()) !== -1;
         });
         displayMakers(locations);
         return locations;
     });
+    self.openInfoWindow = function (location) {
+        openInfoWindowOnMarker(MARKERS.filter(function (marker) {
+            return marker.title === location.title;
+        })[0]);
+    };
 }
 
 

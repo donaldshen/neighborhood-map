@@ -10,7 +10,7 @@
   <div class="container">
     <aside id="list-view">
       <ul id="list" data-bind="foreach: locations">
-        <li data-bind="text: title"></li>
+        <li data-bind="text: title, click: $parent.openInfoWindow"></li>
       </ul>
     </aside>
     <main>
