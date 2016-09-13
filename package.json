@@ -17,7 +17,13 @@
   },
   "homepage": "https://github.com/donaldshen/ajax#readme",
   "devDependencies": {
+    "autoprefixer": "^6.4.1",
     "browser-sync": "^2.14.3",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-postcss": "^6.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0"
   }
 }

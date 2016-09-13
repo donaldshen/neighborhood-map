@@ -15,11 +15,11 @@ body {
     display: flex;
 }
 
-.list-view {
+#list-view {
     flex: 0 200px;
 }
 
-.list-view.close {
+#list-view.close {
     display: none;
 }
 

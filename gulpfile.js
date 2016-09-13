@@ -1,9 +1,9 @@
 var gulp = require('gulp'),
-// sourcemaps = require('gulp-sourcemaps'),
-browserSync = require('browser-sync').create();
-// htmlmin = require('gulp-htmlmin'),
-// uglify = require('gulp-uglify'),
-// cleancss = require('gulp-clean-css');
+sourcemaps = require('gulp-sourcemaps'),
+browserSync = require('browser-sync').create(),
+htmlmin = require('gulp-htmlmin'),
+uglify = require('gulp-uglify'),
+cleancss = require('gulp-clean-css');
 
 
 // Paths to various files
@@ -16,18 +16,20 @@ var paths = {
 
 gulp.task('htmls', function () {
     return gulp.src(paths.htmls)
-    // .pipe(htmlmin({
-    //     collapseWhitespace: true,
-    //     minifyCSS: true,
-    //     removeComments: true,
-    // }))
+    .pipe(htmlmin({
+        collapseWhitespace: true,
+        minifyCSS: true,
+        removeComments: true,
+    }))
     .pipe(gulp.dest('dist'));
 })
 
 
 gulp.task('scripts', function() {
     return gulp.src(paths.scripts)
-    // .pipe(uglify())
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'));
 });
 
@@ -46,11 +48,13 @@ gulp.task('browser', function (){
 
 
 gulp.task('styles', function () {
-    // var postcss      = require('gulp-postcss');
-    // var autoprefixer = require('autoprefixer');
+    var postcss      = require('gulp-postcss');
+    var autoprefixer = require('autoprefixer');
     return gulp.src(paths.styles)
-    // .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
-    // .pipe(cleancss())
+    .pipe(sourcemaps.init())
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
+    .pipe(cleancss())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
 });
 
