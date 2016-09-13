@@ -1,3 +1,5 @@
+/*The way flexbox works with other css properties still remains a mistery...*/
+
 * {
     box-sizing: border-box;
 }
@@ -8,16 +10,20 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-size: 1.1em;
+    background-color: #303030;
+    color: #e4e4e4;
 }
 
 .container {
     height: 100%;
+    min-width: 300px;
     display: flex;
 }
 
 #list-view {
-    flex: 0 auto;
     width: 200px;
+    height: 100%;
     overflow: auto;
     transition: width 0.5s cubic-bezier(0, 0, 0.2, 1);
 }
@@ -27,14 +33,34 @@ body {
 }
 
 main {
-    flex: 1 auto;
+    width: calc(100% - 200px);
+    transition: width 0.5s cubic-bezier(0, 0, 0.2, 1);
     display: flex;
     flex-flow: column;
 }
 
-header {
-    height: 50px;
+main.expand {
     width: 100%;
+}
+
+header {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#toggle {
+    text-decoration: none;
+    color: #737373;
+    margin: 0 10px;
+}
+
+header > input {
+    font-size: 1.1em;
+    min-width: 100px;
+    height: 75%;
+    margin-right: 10px;
 }
 
 #map {

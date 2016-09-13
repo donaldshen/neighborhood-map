@@ -15,7 +15,7 @@
     </aside>
     <main>
       <header>
-        <a href="#" data-bind="" id="menu">☰</a>
+        <a href="#" data-bind="" id="toggle">☰</a>
         <input type="text" placeholder="filter" data-bind="textInput: ">
       </header>
       <div id="map">
@@ -24,17 +24,16 @@
   </div>
   <script>
     /*
-     * Toggle the list-view when the menu ison is clicked.
+     * Toggle the list-view when the toggle ison is clicked.
      */
-    var menu = document.getElementById('menu');
-    var main = document.getElementsByTagName('main')[0];
-    var listView = document.getElementById('list-view');
 
-    menu.addEventListener('click', function(e) {
-      listView.classList.toggle('close');
+    document.getElementById('toggle').addEventListener('click', function(e) {
+      document.getElementById('list-view').classList.toggle('close');
+      document.getElementsByTagName('main')[0].classList.toggle('expand');
     });
 
   </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src='js/knockout-3.4.0.js'></script>
   <script src="js/app.js" charset="utf-8"></script>
   <script src="js/map.js" charset="utf-8"></script>
