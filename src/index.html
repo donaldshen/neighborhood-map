@@ -9,14 +9,14 @@
 <body>
   <div class="container">
     <aside id="list-view">
-      <ul id="list">
-        <li>item</li>
+      <ul id="list" data-bind="foreach: locations">
+        <li data-bind="text: title"></li>
       </ul>
     </aside>
     <main>
       <header>
         <a href="#" data-bind="" id="toggle">☰</a>
-        <input type="text" placeholder="filter" data-bind="textInput: ">
+        <input type="text" placeholder="filter" data-bind="textInput: inputText">
       </header>
       <div id="map">
       </div>
@@ -33,11 +33,10 @@
     });
 
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="js/jquery-3.1.0.min.js"></script>
   <script src='js/knockout-3.4.0.js'></script>
   <script src="js/app.js" charset="utf-8"></script>
-  <script src="js/map.js" charset="utf-8"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlbHcl_He2y0bb6GAcAbUfJ2xq-zITBs&callback=mapEngine">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlbHcl_He2y0bb6GAcAbUfJ2xq-zITBs&callback=init">
   </script>
 </body>
 </html>
