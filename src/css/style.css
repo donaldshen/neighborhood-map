@@ -16,11 +16,14 @@ body {
 }
 
 #list-view {
-    flex: 0 200px;
+    flex: 0 auto;
+    width: 200px;
+    overflow: auto;
+    transition: width 0.5s cubic-bezier(0, 0, 0.2, 1);
 }
 
 #list-view.close {
-    display: none;
+    width: 0;
 }
 
 main {
