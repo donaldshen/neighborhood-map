@@ -5,4 +5,7 @@ A project from Udacity FEND. Use ajax, knockoutjs, googleapis to build this sing
 2. Or you can run the complete application following steps beneath:
   - Open terminal and change cwd to this repo.
   - Run `npm install` on your terminal.
-  - Run `gulp` too. Now your chrome should be opened on this application. 
+  - Run `gulp` too. Now your chrome should be opened on this application.
+
+### Third-party apis
+- [MediaWiki API](https://en.wikipedia.org/w/api.php)
