@@ -129,8 +129,19 @@ function ViewModel() {
     var self = this;
     self.inputText = ko.observable('');
     self.locations = ko.computed(function () {
+        // Find common subsequence between inputText and LOCATIONS
+        var input = self.inputText().toLowerCase();
         var locations = ko.utils.arrayFilter(LOCATIONS, function (l) {
-            return l.title.toLowerCase().search(self.inputText().toLowerCase()) !== -1;
+            var title = l.title.toLowerCase();
+            for (var i = 0; i < input.length; i++) {
+                var index = title.indexOf(input[i]);
+                if (index === -1) {
+                    return false;
+                } else {
+                    title = title.slice(index);
+                }
+            }
+            return true;
         });
         displayMakers(locations);
         return locations;

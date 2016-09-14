@@ -72,6 +72,7 @@ header {
     text-decoration: none;
     color: #737373;
     margin: 0 10px;
+    font-size: 2em;
 }
 
 header > input {
