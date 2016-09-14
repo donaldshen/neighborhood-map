@@ -70,29 +70,26 @@ function openInfoWindowOnMarker(marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function () {
         marker.setAnimation(null);
-    }, 740);
+    }, 1440);
     console.log(marker.wiki);
     // Cache wiki contents after first successfully ajax request.
     if (typeof marker.wiki === 'undefined') {
         // Request for wiki content
-        var wikiRequestTimeout = setTimeout(function () {
-            INFO_WINDOW.setContent('Failed to get wikipedia resources.');
-        }, 5000);
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&callback=wikiCallback&format=json';
         $.ajax(wikiUrl, {
             dataType: 'jsonp',
-            success: function (response) {
-                var title = response[0];
-                var intro = response[2][0];
-                var link = response[3][0];
-                var content = '<div class="infowindow"><a href="' + link +
-                '" target="_blank" rel="noopener noreferrer">' + title +
-                '</a><p>' + intro + '</p></div>';
-                INFO_WINDOW.setContent(content);
+        }).done(function (response) {
+            var title = response[0];
+            var intro = response[2][0] || 'There is no info.';
+            var link = response[3][0] || 'https://www.google.com/#q=' + title;
+            var content = '<div class="infowindow"><a href="' + link +
+            '" target="_blank" rel="noopener noreferrer">' + title +
+            '</a><p>' + intro + '</p></div>';
+            INFO_WINDOW.setContent(content);
 
-                clearTimeout(wikiRequestTimeout);
-                marker.wiki = content;
-            }
+            marker.wiki = content;
+        }).fail(function (jqXHR, textStatus) {
+            INFO_WINDOW.setContent('<div class="infowindow">Failed to get wikipedia resources.</div>');
         });
     } else {
         INFO_WINDOW.setContent(marker.wiki);
