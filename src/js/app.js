@@ -143,3 +143,7 @@ function init() {
     initMap();
     ko.applyBindings(new ViewModel());
 }
+
+function mapError() {
+    window.alert('Failed to load google maps');
+}
