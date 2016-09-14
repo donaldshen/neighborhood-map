@@ -65,29 +65,39 @@ function initMap() {
 * @param {google.maps.Marker} marker
 */
 function openInfoWindowOnMarker(marker) {
+    INFO_WINDOW.setContent('');
     // One bounce
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function () {
         marker.setAnimation(null);
     }, 740);
-    // Request for wiki content
-    var wikiRequestTimeout = setTimeout(function () {
-        INFO_WINDOW.setContent('failed to get wikipedia resources');
-    }, 5000);
-    var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&callback=wikiCallback&format=json';
-    $.ajax(wikiUrl, {
-        dataType: 'jsonp',
-        success: function (response) {
-            var title = response[0];
-            var intro = response[2][0];
-            var link = response[3][0];
-            var content = '<div class="infowindow"><a href="' + link +'">' + title + '</a>' +
-                          '<p>' + intro + '</p></div>';
-            INFO_WINDOW.setContent(content);
+    console.log(marker.wiki);
+    // Cache wiki contents after first successfully ajax request.
+    if (typeof marker.wiki === 'undefined') {
+        // Request for wiki content
+        var wikiRequestTimeout = setTimeout(function () {
+            INFO_WINDOW.setContent('Failed to get wikipedia resources.');
+        }, 5000);
+        var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&callback=wikiCallback&format=json';
+        $.ajax(wikiUrl, {
+            dataType: 'jsonp',
+            success: function (response) {
+                var title = response[0];
+                var intro = response[2][0];
+                var link = response[3][0];
+                var content = '<div class="infowindow"><a href="' + link +
+                '" target="_blank" rel="noopener noreferrer">' + title +
+                '</a><p>' + intro + '</p></div>';
+                INFO_WINDOW.setContent(content);
 
-            clearTimeout(wikiRequestTimeout);
-        }
-    });
+                clearTimeout(wikiRequestTimeout);
+                marker.wiki = content;
+            }
+        });
+    } else {
+        INFO_WINDOW.setContent(marker.wiki);
+    }
+
     INFO_WINDOW.open(MAP, marker);
 }
 
