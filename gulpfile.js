@@ -35,7 +35,17 @@ gulp.task('scripts', function() {
 
 
 // Launches a test webserver
-gulp.task('browser', function (){
+gulp.task('serve', function (){
+    browserSync.init({
+            port: 8000,
+        server: {
+            baseDir: "dist"
+        },
+        browser: 'google chrome',
+        files: ['src/**/*']
+    });
+});
+gulp.task('serve:dist', function (){
     browserSync.init({
             port: 8000,
         server: {
@@ -59,7 +69,7 @@ gulp.task('styles', function () {
 });
 
 
-gulp.task('default', ['htmls', 'styles', 'scripts' ,'browser'], function () {
+gulp.task('default', ['htmls', 'styles', 'scripts' ,'serve'], function () {
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.styles, ['styles']);
     gulp.watch(paths.htmls, ['htmls']);

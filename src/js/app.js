@@ -46,6 +46,7 @@ function initMap() {
             title: l.title,
             icon: defaultIcon,
             animation: google.maps.Animation.DROP,
+            map: MAP,
         });
         MARKERS.push(marker);
         marker.addListener('mouseover', function() {
@@ -109,10 +110,10 @@ function displayMakers(locations) {
         if (locations.some(function (l) {
             return l.title === marker.title;
         })) {
-            marker.setMap(MAP);
+            marker.setVisible(true);
             bounds.extend(marker.position);
         } else {
-            marker.setMap(null);
+            marker.setVisible(false);
         }
     });
     // Extend the boundaries of the map for each marker
