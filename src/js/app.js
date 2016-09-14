@@ -1,3 +1,4 @@
+'use strict';
 /**
 * @file Contains viewmodel and map facility.
 * @author Donald Shen <donald930224@hotmail.com>
@@ -25,19 +26,19 @@ var MARKERS = [];
 * Create MAP, INFO_WINDOW and MARKERS.
 */
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
+    MAP = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.7413549, lng: -73.9980244},
         zoom: 13,
     });
 
-    INFO_WINDOW = new google.maps.InfoWindow()
+    INFO_WINDOW = new google.maps.InfoWindow();
 
     function MarkerIcon(markerColor) {
-        this.url = 'https://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2'
-        this.scaledSize = new google.maps.Size(21,34)
+        this.url = 'https://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2';
+        this.scaledSize = new google.maps.Size(21,34);
     }
-    var defaultIcon = new MarkerIcon('0091ff')
-    var highlightedIcon = new MarkerIcon('FFFF24')
+    var defaultIcon = new MarkerIcon('0091ff');
+    var highlightedIcon = new MarkerIcon('FFFF24');
 
     LOCATIONS.forEach(function (l) {
         var marker = new google.maps.Marker({
@@ -45,17 +46,17 @@ function initMap() {
             title: l.title,
             icon: defaultIcon,
             animation: google.maps.Animation.DROP,
-        })
+        });
         MARKERS.push(marker);
         marker.addListener('mouseover', function() {
-            this.setIcon(highlightedIcon)
-        })
+            this.setIcon(highlightedIcon);
+        });
         marker.addListener('mouseout', function() {
-            this.setIcon(defaultIcon)
-        })
+            this.setIcon(defaultIcon);
+        });
         marker.addListener('click', function() {
-            openInfoWindowOnMarker(marker)
-        })
+            openInfoWindowOnMarker(marker);
+        });
     });
 }
 
@@ -65,30 +66,29 @@ function initMap() {
 */
 function openInfoWindowOnMarker(marker) {
     // One bounce
-    marker.setAnimation(google.maps.Animation.BOUNCE)
+    marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function () {
-        marker.setAnimation(null)
+        marker.setAnimation(null);
     }, 740);
     // Request for wiki content
     var wikiRequestTimeout = setTimeout(function () {
         INFO_WINDOW.setContent('failed to get wikipedia resources');
     }, 5000);
-    var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&callback=wikiCallback&format=json'
+    var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&callback=wikiCallback&format=json';
     $.ajax(wikiUrl, {
         dataType: 'jsonp',
         success: function (response) {
             var title = response[0];
             var intro = response[2][0];
             var link = response[3][0];
-            var items = [];
             var content = '<div class="infowindow"><a href="' + link +'">' + title + '</a>' +
                           '<p>' + intro + '</p></div>';
             INFO_WINDOW.setContent(content);
 
             clearTimeout(wikiRequestTimeout);
         }
-    })
-    INFO_WINDOW.open(map, marker);
+    });
+    INFO_WINDOW.open(MAP, marker);
 }
 
 /**
@@ -102,14 +102,14 @@ function displayMakers(locations) {
         if (locations.some(function (l) {
             return l.title === marker.title;
         })) {
-            marker.setMap(map);
+            marker.setMap(MAP);
             bounds.extend(marker.position);
         } else {
             marker.setMap(null);
         }
-    })
+    });
     // Extend the boundaries of the map for each marker
-    map.fitBounds(bounds);
+    MAP.fitBounds(bounds);
 }
 
 /**
@@ -130,6 +130,10 @@ function ViewModel() {
             return marker.title === location.title;
         })[0]);
     };
+    self.showListView = ko.observable(true);
+    self.toggleListView = function () {
+        self.showListView(!self.showListView());
+    }
 }
 
 /**

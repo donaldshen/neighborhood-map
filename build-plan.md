@@ -10,7 +10,10 @@ single page application，有map，上面有被标记的locations，点击后展
 > 5. autocomplete/model
 > 6. marker/animation
 > 7. infowindow/third-party api
-> 8. (opt)display route from my place to the specific marker
+> 8. (after reviews)
+> 9. use knockout in list toggle
+> 10. add map error handle
+> 11. cache wiki results
 
 #### knockout
 - 处理list（click event），

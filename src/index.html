@@ -8,14 +8,14 @@
 </head>
 <body>
   <div class="container">
-    <aside id="list-view">
+    <aside id="list-view" data-bind="css: {close: !showListView()}">
       <ul id="list" data-bind="foreach: locations">
         <li data-bind="text: title, click: $parent.openInfoWindow"></li>
       </ul>
     </aside>
-    <main>
+    <main data-bind="css: {expand: !showListView()}">
       <header>
-        <a href="#" data-bind="" id="toggle">☰</a>
+        <a href="#" data-bind="click: toggleListView" id="toggle">☰</a>
         <input type="text" placeholder="filter" data-bind="textInput: inputText">
       </header>
       <div id="map">
@@ -24,12 +24,12 @@
   </div>
   <script src="js/jquery-3.1.0.min.js"></script>
   <!-- Responsive design -->
-  <script>
+  <!-- <script>
     $('#toggle').click(function () {
       $('#list-view').toggleClass('close');
       $('main').toggleClass('expand');
     });
-  </script>
+  </script> -->
   <script src='js/knockout-3.4.0.js'></script>
   <script src="js/app.js" charset="utf-8"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlbHcl_He2y0bb6GAcAbUfJ2xq-zITBs&callback=init">
