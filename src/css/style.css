@@ -2,25 +2,24 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html,
 body {
     font-family: Arial, sans-serif;
     height: 100%;
-    margin: 0;
-    padding: 0;
     font-size: 1.1em;
     background-color: #303030;
 }
 
-.container {
+#container {
     height: 100%;
     min-width: 300px;
-    /*display: flex;*/
 }
 
-#list-view {
+aside {
     width: 200px;
     height: 100%;
     overflow: auto;
@@ -32,17 +31,16 @@ body {
     float: left;
 }
 
-#list-view.close {
-    /*left: -200px;*/
+aside.close {
     margin-left: -200px;
 }
 
-#list-view ul {
+ul {
     list-style: none;
     padding: 0;
 }
 
-#list-view ul li{
+ul li{
     display: block;
     text-decoration: none;
     line-height: 30px;
@@ -51,15 +49,13 @@ body {
     cursor: pointer;
 }
 
-#list-view ul li:hover {
+ul li:hover {
     color: #737373;
 }
 
 main {
     width: calc(100% - 200px);
-    /*width: 100%;*/
     height: 100%;
-    /*padding-left: 200px;*/
     transition: width 0.5s cubic-bezier(0, 0, 0.2, 1);
     float: left;
 }
@@ -76,18 +72,18 @@ header {
     align-items: center;
 }
 
-#toggle {
+header a {
     text-decoration: none;
     color: #888;
     margin: 0 10px;
     font-size: 1.6em;
 }
 
-#toggle:hover {
+header a:hover {
     color: #e4e4e4;
 }
 
-header > input {
+input {
     font-size: 1.1em;
     min-width: 100px;
     height: 75%;

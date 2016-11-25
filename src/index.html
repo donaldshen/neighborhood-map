@@ -7,15 +7,15 @@
   <link rel="stylesheet" href="css/style.css" media="screen" title="no title">
 </head>
 <body>
-  <div class="container">
-    <aside id="list-view" data-bind="css: {close: !showListView()}">
-      <ul id="list" data-bind="foreach: locations">
+  <div id="container">
+    <aside data-bind="css: {close: !showListView()}">
+      <ul data-bind="foreach: locations">
         <li data-bind="text: title, click: $parent.openInfoWindow"></li>
       </ul>
     </aside>
     <main data-bind="css: {expand: !showListView()}">
       <header>
-        <a href="#" data-bind="click: toggleListView" id="toggle">☰</a>
+        <a href="#" data-bind="click: toggleListView">☰</a>
         <input type="text" placeholder="filter" data-bind="textInput: inputText">
       </header>
       <div id="map">
@@ -25,8 +25,8 @@
   <script src="js/jquery-3.1.0.min.js"></script>
   <!-- Responsive design -->
   <!-- <script>
-    $('#toggle').click(function () {
-      $('#list-view').toggleClass('close');
+    $('header a').click(function () {
+      $('aside').toggleClass('close');
       $('main').toggleClass('expand');
     });
   </script> -->
